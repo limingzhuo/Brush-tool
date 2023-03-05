@@ -1,0 +1,86 @@
+@echo off
+chcp 65001
+echo.*************************************************************
+echo.刷机工具箱 by:lmz
+echo.提示:请开启usb调试并同意此电脑调试 执行进入刷机模式 或者 按音量键-加电源键进入
+echo.按1刷写boot 请向文件夹导入文件 并命名为 boot.img
+echo.按2刷写rec 请向文件夹导入文件 并命名为 rec.img
+echo.按3临时启动镜像 请向文件夹导入文件 并命名为 bootboot.img
+echo.按4安装刷机驱动
+echo.按5刷写system 请向文件夹导入文件 并命名为 system.img
+echo.按6刷写vendor 请向文件夹导入文件 并命名为 vendor.img
+echo.按7退出工具箱
+echo.按8进入刷机模式
+echo.**************************************************************
+set /p input=请输入
+if "%input%"=="1" goto 1
+if "%input%"=="2" goto 2
+if "%input%"=="3" goto 3
+if "%input%"=="4" goto 4
+if "%input%"=="5" goto 5
+if "%input%"=="6" goto 6
+if "%input%"=="7" goto 7
+exit
+
+:1
+echo.检测设备连接 如何判断?出现xxxxxxx fastboot 代表连接成功 请按键继续 否则请重启程序 或者重新连接手机
+fastboot devices
+pause
+fastboot flash boot boot.img
+echo.刷机成功 请按键重启
+pause
+exit
+
+:2
+echo.检测设备连接 如何判断?出现xxxxxxx fastboot 代表连接成功 请按键继续 否则请重启程序 或者重新连接手机
+fastboot devices
+pause
+fastboot flash recovery rec.img
+echo.刷机成功 请按键重启
+pause
+exit
+
+:3
+echo.检测设备连接 如何判断?出现xxxxxxx fastboot 代表连接成功 请按键继续 否则请重启程序 或者重新连接手机
+fastboot devices
+pause
+fastboot boot bootboot.img
+echo.临时启动成功
+pause
+exit
+
+:4
+start drive.exe
+echo.驱动安装完成
+pause
+exit
+
+:5 
+echo.检测设备连接 如何判断?出现xxxxxxx fastboot 代表连接成功 请按键继续 否则请重启程序 或者重新连接手机
+fastboot devices
+pause
+fastboot flash system system.img
+echo.刷机成功 请按键重启
+pause
+exit
+
+:6
+echo.检测设备连接 如何判断?出现xxxxxxx fastboot 代表连接成功 请按键继续 否则请重启程序 或者重新连接手机
+fastboot devices
+pause
+fastboot flash vendor vendor.img
+echo.刷机成功 请按键重启
+pause
+exit
+
+:7
+exit
+
+:8 
+echo.检测设备连接 如何判断?出现xxxxxxx device 代表连接成功 请按键继续 否则请重启程序 或者重新连接手机
+adb devices
+pause
+adb reboot bootloader
+echo.重启成功
+pause
+exit
